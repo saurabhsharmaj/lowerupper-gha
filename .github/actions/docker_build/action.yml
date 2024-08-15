@@ -1,0 +1,48 @@
+name: "Docker Build and Scan"
+description: "Composite action for docker build and scan"
+
+inputs:
+  image_env:
+    description: 'Docker image environment. ex: dev'
+    required: true
+  DOCKER_USER: 
+    description: 'Docker registry login username'
+    required: true
+  DOCKER_PASSWD: 
+    description: 'Docker registry login  password'
+    required: true
+    
+outputs:
+  deploy_image:
+    description: "Deployment image"
+    value: ${{ steps.docker.outputs.image1 }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Build Docker Image
+      shell: bash
+      run: |  
+        image_prefix=$np_registry/$service_name         
+        if [ "${{ inputs.image_env }}" == "dev" ]; then
+          tag=${{ inputs.image_env }}${GITHUB_SHA:0:7}${GITHUB_RUN_NUMBER}
+          tag2=qa${GITHUB_SHA:0:7}${GITHUB_RUN_NUMBER}
+          image1=$image_prefix:$tag
+          docker build -t $image1 .
+          echo "image1=$image1" >> $GITHUB_ENV ;
+          cat $GITHUB_ENV ;        
+        fi
+         
+    - name: Publish Docker Image
+      shell: bash
+      id: docker
+      run: | 
+        registry_url=$(echo $image1 | cut -d / -f 1 )
+        #echo ${{ inputs.DOCKER_PASSWD }} | docker login $registry_url -u ${{ inputs.DOCKER_USER }} --password-stdin
+        docker login $registry_url -u ${{ inputs.DOCKER_USER }}  -p  ${{ inputs.DOCKER_PASSWD }}    
+        if [ "${{ inputs.image_env }}" == "dev" ]; then
+          docker image push  $image1 ; 
+        fi
+        echo "image1=$image1" >> "$GITHUB_OUTPUT" ;
+        echo "$GITHUB_OUTPUT";
+        cat $GITHUB_OUTPUT ;
