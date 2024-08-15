@@ -30,5 +30,6 @@ runs:
       shell: cmd
       id: docker
       run: | 
-        docker login -u ${{ inputs.DOCKER_USER }}  -p  ${{ inputs.DOCKER_PASSWD }} http://192.168.1.39:8083/repository/docker-hosted/ 
-        docker image push lowerupper:latest 
+        docker login -u ${{ inputs.DOCKER_USER }}  -p  ${{ inputs.DOCKER_PASSWD }} http://192.168.1.39:8083/repository/docker-hosted/
+        docker tag lowerupper:1.0.91 192.168.1.39:8083/docker-hosted/lowerupper:latest
+        docker push 192.168.1.39:8083/docker-hosted/lowerupper:latest 
