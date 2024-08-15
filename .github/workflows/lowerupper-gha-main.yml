@@ -56,8 +56,6 @@ jobs:
         shell: cmd
         run: |    
           git clone https://${{ secrets.TOKEN_GITHUB }}@saurabhsharmaj/lowerupper-gha-config.git
-          manifests_folder=lowerupper-gha-config/dev
-          [[ -d $manifests_folder ]] && cd $manifests_folder && kustomize edit set image ${{ env.registry_url }}/docker-hosted:${{ env.NEW_TAG }} || ( echo "$manifests_folder not found .." && exit 1 )
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git remote set-url origin https://${{ secrets.TOKEN_GITHUB }}@saurabhsharmaj/lowerupper-gha-config.git
