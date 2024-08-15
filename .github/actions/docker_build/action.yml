@@ -28,9 +28,8 @@ runs:
           set tag=${{ inputs.image_env }}${GITHUB_SHA:0:7}${GITHUB_RUN_NUMBER}
           set tag2=qa${GITHUB_SHA:0:7}${GITHUB_RUN_NUMBER}
           set image1=$image_prefix:$tag
-          docker build -t $image1 .
-          echo "image1=$image1" >> $GITHUB_ENV ;
-          cat $GITHUB_ENV ;        
+          docker build -t %image1% .         
+          type %image1% ;        
         fi
          
     - name: Publish Docker Image
@@ -42,7 +41,5 @@ runs:
         docker login $registry_url -u ${{ inputs.DOCKER_USER }}  -p  ${{ inputs.DOCKER_PASSWD }}    
         if [ "${{ inputs.image_env }}" == "dev" ]; then
           docker image push  $image1 ; 
-        fi
-        echo "image1=$image1" >> "$GITHUB_OUTPUT" ;
-        echo "$GITHUB_OUTPUT";
-        cat $GITHUB_OUTPUT ;
+        fi        
+        type %image1% ;
