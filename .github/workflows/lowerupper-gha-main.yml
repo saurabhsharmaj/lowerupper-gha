@@ -52,15 +52,6 @@ jobs:
           DOCKER_USER: ${{ secrets.DOCKER_USER }}
           DOCKER_PASSWD: ${{ secrets.DOCKER_PASSWD }}
       
-      - name: Build Docker Image
-        run: |
-          sudo docker build -t ${{ env.registry_url }}/docker-hosted:${{ env.NEW_TAG }} .
-
-      - name: Push Docker image to Nexus
-        run: |
-          docker login ${{ env.registry_url }} -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWD }}
-          docker push ${{ env.registry_url }}/docker-hosted:${{ env.NEW_TAG }}
-
       - name: Update Image tag
         shell: cmd
         run: |    
