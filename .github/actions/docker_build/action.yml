@@ -21,7 +21,7 @@ runs:
   using: "composite"
   steps:
     - name: Build Docker Image
-      shell: bash
+      shell: cmd
       run: |  
         image_prefix=$np_registry/$service_name         
         if [ "${{ inputs.image_env }}" == "dev" ]; then
@@ -34,7 +34,7 @@ runs:
         fi
          
     - name: Publish Docker Image
-      shell: bash
+      shell: cmd
       id: docker
       run: | 
         registry_url=$(echo $image1 | cut -d / -f 1 )

@@ -63,7 +63,7 @@ jobs:
           docker push ${{ env.registry_url }}/docker-hosted:${{ env.NEW_TAG }}
 
       - name: Update Image tag
-        shell: bash
+        shell: cmd
         run: |    
           git clone https://${{ secrets.TOKEN_GITHUB }}@github.com/${{ env.config_repository }}
           manifests_folder=lowerupper-gha-config/lowerupper-gha/qa
