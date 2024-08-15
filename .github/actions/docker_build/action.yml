@@ -23,11 +23,11 @@ runs:
     - name: Build Docker Image
       shell: cmd
       run: |  
-        image_prefix=$np_registry/$service_name         
+        set image_prefix=$np_registry/$service_name         
         if [ "${{ inputs.image_env }}" == "dev" ]; then
-          tag=${{ inputs.image_env }}${GITHUB_SHA:0:7}${GITHUB_RUN_NUMBER}
-          tag2=qa${GITHUB_SHA:0:7}${GITHUB_RUN_NUMBER}
-          image1=$image_prefix:$tag
+          set tag=${{ inputs.image_env }}${GITHUB_SHA:0:7}${GITHUB_RUN_NUMBER}
+          set tag2=qa${GITHUB_SHA:0:7}${GITHUB_RUN_NUMBER}
+          set image1=$image_prefix:$tag
           docker build -t $image1 .
           echo "image1=$image1" >> $GITHUB_ENV ;
           cat $GITHUB_ENV ;        
