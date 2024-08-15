@@ -4,7 +4,7 @@ on:
     branches:
       - main
 env:
-  registry_url: 192.168.1.41:8083
+  registry_url: 192.168.1.39:8083
   config_repository: https://github.com/saurabhsharmaj/lowerupper-gha-config.git
 permissions:
   contents: write
