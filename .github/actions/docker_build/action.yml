@@ -24,14 +24,8 @@ runs:
       shell: cmd
       run: |  
         set image_prefix=$np_registry/$service_name         
-        if [ "${{ inputs.image_env }}" == "dev" ]; then
-          set tag=${{ inputs.image_env }}${GITHUB_SHA:0:7}${GITHUB_RUN_NUMBER}
-          set tag2=qa${GITHUB_SHA:0:7}${GITHUB_RUN_NUMBER}
-          set image1=$image_prefix:$tag
-          docker build -t %image1% .         
-          type %image1% ;        
-        fi
-         
+        docker build -t %image1%
+        echo %image1%
     - name: Publish Docker Image
       shell: cmd
       id: docker
@@ -42,4 +36,4 @@ runs:
         if [ "${{ inputs.image_env }}" == "dev" ]; then
           docker image push  $image1 ; 
         fi        
-        type %image1% ;
+        echo %image1% ;
