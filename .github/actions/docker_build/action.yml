@@ -30,7 +30,7 @@ runs:
       shell: cmd
       id: docker
       run: | 
-        registry_url=$(echo $image1 | cut -d / -f 1 )
+        #registry_url=$(echo $image1 | cut -d / -f 1 )
         #echo ${{ inputs.DOCKER_PASSWD }} | docker login $registry_url -u ${{ inputs.DOCKER_USER }} --password-stdin
-        docker login $registry_url -u ${{ inputs.DOCKER_USER }}  -p  ${{ inputs.DOCKER_PASSWD }}    
+        docker login 192.168.1.41:8083 -u ${{ inputs.DOCKER_USER }}  -p  ${{ inputs.DOCKER_PASSWD }}    
         docker image push  lowerupper:latest ; 
