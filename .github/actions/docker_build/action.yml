@@ -24,8 +24,8 @@ runs:
       shell: cmd
       run: |  
         set image_prefix=$np_registry/$service_name         
-        docker build -t %image1%
-        echo %image1%
+        docker build -t lowerupper:latest .
+        
     - name: Publish Docker Image
       shell: cmd
       id: docker
@@ -33,7 +33,4 @@ runs:
         registry_url=$(echo $image1 | cut -d / -f 1 )
         #echo ${{ inputs.DOCKER_PASSWD }} | docker login $registry_url -u ${{ inputs.DOCKER_USER }} --password-stdin
         docker login $registry_url -u ${{ inputs.DOCKER_USER }}  -p  ${{ inputs.DOCKER_PASSWD }}    
-        if [ "${{ inputs.image_env }}" == "dev" ]; then
-          docker image push  $image1 ; 
-        fi        
-        echo %image1% ;
+        docker image push  lowerupper:latest ; 
